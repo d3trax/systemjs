@@ -385,7 +385,7 @@ define(function() {
 	 */
 	function formatObject(o) {
 		var s = String(o);
-		if(s === '[object Object]' && typeof JSON !== 'undefined') {
+		if((s === '[object Object]' || s === '[object Error]') && typeof JSON !== 'undefined') {
 			s = tryStringify(o, s);
 		}
 		return s;
