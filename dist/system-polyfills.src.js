@@ -366,14 +366,14 @@ define(function() {
 	};
 
 	/**
-	 * Format an error into a string.  If e is an Error and has a stack property,
+	 * Format an error into a string.  If e is an Error and has a stack or message property,
 	 * it's returned.  Otherwise, e is formatted using formatObject, with a
 	 * warning added about e not being a proper Error.
 	 * @param {*} e
 	 * @returns {String} formatted string, suitable for output to developers
 	 */
 	function formatError(e) {
-		var s = typeof e === 'object' && e !== null && e.stack ? e.stack : formatObject(e);
+		var s = typeof e === 'object' && e !== null && e.stack ? e.stack : e.message ? e.message : formatObject(e);
 		return e instanceof Error ? s : s + ' (WARNING: non-Error used)';
 	}
 
@@ -385,7 +385,7 @@ define(function() {
 	 */
 	function formatObject(o) {
 		var s = String(o);
-		if((s === '[object Object]' || s === '[object Error]') && typeof JSON !== 'undefined') {
+		if(s === '[object Object]' && typeof JSON !== 'undefined') {
 			s = tryStringify(o, s);
 		}
 		return s;
